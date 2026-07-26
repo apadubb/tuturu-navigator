@@ -46,11 +46,10 @@
   /* ---------- Слайдеры ---------- */
   .constructor{display:flex;gap:40px;margin:32px 0;border-radius:12px;}
   .constructor-intro{margin:0 0 20px;font-weight:700;}
-  .slider-block{width:33%;}
+  .slider-block{width:50%;}
   /* ползунки друг под другом */
-  .slider-grid{display:flex;flex-direction:column;gap:0;}
+  .slider-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;}
   .slider-row{margin-bottom:28px;}
-  .slider-row:last-child{margin-bottom:0;}
   .slider-labels{display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin-bottom:8px;}
   .slider-value{color:var(--accent);font-weight:700;}
 
@@ -262,7 +261,7 @@
 
 <script>
   // Каждые SWAP_STEP пунктов ползунка добавляют одну тематическую подмену карточки
-  const SWAP_STEP = 20;
+  const SWAP_STEP = 30;
 
   // ---------- Данные городов ----------
   const cities = [
