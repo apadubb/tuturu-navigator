@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>В отпуск без бензина</title>
+<link rel="icon" href="images/icons/favicon.svg">
+<style>
+  :root{
+    --accent:#2b6cff;
+    --text:#1a1a1a;
+    --muted:#6b6b6b;
+    --line:#e2e2e2;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family: Arial, Helvetica, sans-serif;color:var(--text);}
+  .wrapper{max-width:1000px;margin:0 auto;padding:0 24px;}
+
+  /* ширина колонки с основным текстом — 77% от wrapper */
+  .text-column{width:66%;}
+
+  header.wrapper{display:flex;align-items:center;flex-wrap:wrap;padding-top:20px;position:relative;}
+  .logo img{height:28px;display:block;}
+  .menu{display:flex;gap:24px;margin-left:40px;}
+  .menu a, .menu span{text-decoration:none;color:var(--text);font-size:14px;}
+  .menu-active{font-weight:700;}
+  .user-tools{margin-left:auto;display:flex;gap:8px;}
+  .icon svg{display:block;}
+  .hero-image{width:100%; aspect-ratio: 16/9;object-fit:cover;border-radius:8px;margin-top:20px;background:#ddd;}
+
+  .heading-caption{color:var(--muted);font-size:14px;margin:24px 0 8px;}
+  h1{font-size:36px;margin:0 0 12px;}
+  .intro{font-size:18px;color:var(--muted);margin:0 0 16px;}
+  .social-actions{display:flex;gap:12px;margin-bottom:24px;}
+  .social-actions button{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:20px;padding:8px 14px;cursor:pointer;font-size:14px;}
+  .social-actions svg{width:16px;height:16px;}
+
+  p{line-height:1.6;font-size:16px;}
+  .with-offset{margin-top:20px;
+              margin-left:60px;}
+  .is-bold{font-weight:700;}
+
+  h2{font-size:26px;margin-top:36px;}
+  h3{font-size:20px;}
+
+  /* ---------- Слайдеры ---------- */
+  .constructor{display:flex;gap:40px;margin:32px 0;border-radius:12px;}
+  .constructor-intro{margin:0 0 20px;font-weight:700;}
+  .slider-block{width:33%;}
+  /* ползунки друг под другом */
+  .slider-grid{display:flex;flex-direction:column;gap:0;}
+  .slider-row{margin-bottom:28px;}
+  .slider-row:last-child{margin-bottom:0;}
+  .slider-labels{display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin-bottom:8px;}
+  .slider-value{color:var(--accent);font-weight:700;}
+
+  input[type=range]{
+    -webkit-appearance:none;
+    width:100%;
+    height:4px;
+    border-radius:2px;
+    outline:none;
+    margin:0;
+    background:var(--line);
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:20px;height:20px;
+    border-radius:50%;
+    background:var(--accent);
+    border:3px solid #fff;
+    box-shadow:0 0 0 1px var(--accent);
+    cursor:pointer;
+    transition:transform .12s ease;
+  }
+  input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15);}
+  input[type=range]::-moz-range-thumb{
+    width:16px;height:16px;border-radius:50%;
+    background:var(--accent);border:3px solid #fff;
+    box-shadow:0 0 0 1px var(--accent);cursor:pointer;
+  }
+  input[type=range]::-moz-range-track{
+    height:4px;border-radius:2px;background:var(--line);
+  }
+
+  /* ---------- Галерея ---------- */
+  .gallery-section{display:flex;gap:2em;margin:2em 0;align-items:flex-start;}
+  .gallery-left{flex:1;}
+  .gallery-title{font-size:16px;font-weight:700;margin:0 0 12px;}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5em;}
+  .gallery-grid img{
+    width:100%;
+    max-width: 150px;
+    aspect-ratio:3/4;
+    object-fit:cover;
+    border-radius:6px;
+    cursor:pointer;
+    display:block;
+    transition:opacity .15s, outline .15s;
+  }
+  .gallery-grid img:hover, .gallery-grid img.is-active{outline:2px solid var(--accent);}
+
+  .gallery-right{max-width:450px;flex-shrink:0;}
+  .gallery-right-title{font-size:16px;font-weight:700;margin:0 0 12px;}
+  .cover-image{
+    width:100%;
+    
+    aspect-ratio:1/1;
+    object-fit:cover;
+    border-radius:8px;
+    display:block;
+    background:#ddd;
+  }
+  .description{margin-top:12px;font-size:16px;line-height:1.5;}
+
+  /* ---------- Туры / футер ---------- */
+  aside{background:#f2f5ff;padding:24px;border-radius:12px;margin:32px 0;max-width: 73%;}
+  aside a{color:var(--accent);text-decoration:none;}
+  .share-selection{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:20px;padding:10px 18px;cursor:pointer;font-size:14px;margin-bottom:32px;}
+
+  footer.wrapper{display:flex;justify-content:space-between;padding:24px 24px 40px;border-top:1px solid var(--line);margin-top:20px;font-size:14px;color:var(--muted);}
+  .contacts a{color:var(--muted);text-decoration:none;margin-right:16px;}
+  .footer-menu{display:flex;gap:20px;}
+  .footer-menu a{color:var(--muted);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header class="wrapper">
+  <a class="logo" href="#"><img src="images/icons/logo.svg" alt="Юный техник"></a>
+  <nav class="menu">
+    <span class="menu-active">Статьи</span>
+    <a href="#">Курсы</a>
+    <a href="#">Сообщество</a>
+  </nav>
+  <div class="user-tools">
+    <a class="icon search" href="#"><svg width="12" height="16" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M8.51559 15.0581L7.2413 12.4074L10.4875 11.0357L11.8548 13.6141C12.7422 15.7106 9.30436 16.9692 8.51559 15.0581ZM3.66583 0.514339C10.7889 -2.43667 15.3391 8.14767 8.38165 11.0301C0.765647 14.1869 -3.48697 3.47833 3.66583 0.514339ZM4.25182 1.90458C-1.02953 4.09374 2.10505 11.9996 7.73427 9.66766C12.8724 7.53782 9.51457 -0.277169 4.25182 1.90458Z" fill="black"/>
+</svg>
+</a>
+    <a class="icon settings" href="#"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16 8.65408L15.1223 11.7181L12.5783 11.5504C12.2935 11.9633 11.9549 12.3352 11.5716 12.6559L11.7733 15.2354L8.72232 16L7.45031 13.6822C7.2904 13.6527 7.12686 13.6177 6.9615 13.5735C6.57008 13.4694 6.18634 13.3376 5.81306 13.1792L3.54344 14.6642L1.36286 12.3611L2.68756 10.2902C2.41651 9.71008 2.24682 9.08667 2.18603 8.44772L0 7.22985L0.826803 4.39245L3.16366 4.47167C3.53282 3.88813 3.99955 3.37436 4.54287 2.95348L4.43384 0.69461L7.2686 0L8.32436 1.87379C9.1184 1.95042 9.89319 2.16677 10.614 2.51313L12.6982 1.23261L14.708 3.37909L13.376 5.54583C13.5945 6.15391 13.7172 6.7931 13.7395 7.43989L16 8.65408ZM8.77501 4.8328C4.91539 3.80286 3.00556 9.80746 7.46667 10.9959C11.2263 12.0074 12.7091 5.883 8.77501 4.8328Z" fill="black"/>
+</svg>
+</a>
+  </div>
+  <img class="hero-image" src="images/hero-image.png" alt="Фотографии из будущего отпуска">
+</header>
+
+<div class="wrapper">
+  <p class="heading-caption">Спецпроект совместно с сервисом путешествий Туту</p>
+  <h1>В отпуск без бензина</h1>
+  <p class="intro">Выбираем, где отдохнуть и какие впечатления привезти домой</p>
+  <div class="social-actions">
+    <button><svg width="27" height="24" viewBox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M25.1825 19.5763L22.0953 19.476L21.7032 24L17.2347 19.3203L9.47127 19.0695L9.0091 16.1662L4.36663 20.1992L4.41855 15.1843C-2.91126 11.7926 -1.00546 -0.346112 9.27135 0.00757145C14.3578 0.184413 17.297 2.92942 18.1149 6.10202L27 5.69818L25.1825 19.5763ZM9.12335 8.20564L10.8526 17.4437L18.1045 17.7525L20.5296 20.6189L20.7607 17.866L23.8765 17.9979L24.9644 7.55634L9.12335 8.20564Z" fill="black"/>
+</svg>
+27</button>
+    <button><svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12.6184 13.7284L0 12.5203C0.363546 9.89848 1.85898 8.24619 3.68187 7.47716L3.0837 0L13 1.13706L10.4655 8.38071C11.8965 9.533 12.8195 11.3249 12.6184 13.7284ZM7.97739 15.5051L5.00198 24L4.28521 15.0558L7.97739 15.5051Z" fill="black"/>
+</svg>
+Сохранить</button>
+    <button><svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.6497 18.1649C10.6497 18.1649 9.63011 17.9828 9.83247 16.7372C9.91809 16.2094 10.1464 14.7922 10.3799 13.3222C4.51405 12.6334 3.02748 19.0939 6.84897 23.5645L6.07066 24C-5.12658 17.1726 0.830063 3.78711 10.5226 5.06708C10.3565 3.71322 10.1957 2.38311 10.1127 1.71014C9.91031 0.0263909 11.0311 0 11.0311 0L22 9.989L10.6497 18.1649Z" fill="black"/>
+</svg>
+Поделиться</button>
+  </div>
+</div>
+
+<div class="wrapper">
+  <div class="text-column">
+    <p>Чтобы не сверяться с картой работающих заправок, можно отправиться в путешествие на самолёте, поезде и автобусе. «Юный техник» изучил путеводители по 82 туристическим регионам России и собрал конструктор впечатлений: в нём можно найти место по тому, каким хочется запомнить отпуск.</p>
+    <h2>Конструктор впечатлений подскажет маршрут</h2>
+    <p>После путешествия в телефоне остаётся галерея воспоминаний: у одного — закаты, виды степей и горных массивов, у другого — стрит-арт, старинная архитектура и местные деликатесы. Вместе с конструктором впечатлений подсмотреть фотоальбом можно ещё до поездки. Если подборка совпадёт с ожиданиями, можно сразу выбрать тур с проездом и проживанием.</p>
+    <p>Передвигайте ползунки, чтобы подобрать путешествие под свои предпочтения. Чем сильнее вы сдвинете конкретный ползунок, тем больше карточек в галерее заменится на более подходящие по теме.</p>
+    <p class="with-offset"><span class="is-bold">Больше технологий.</span> Ползунок для тех, кого интересуют машины, фабрики и заводы. После отпуска в галерее сохранятся снимки из оружейных мастерских и мастер-классов по кузнечному делу. Рекомендуем пройти маршрут нефтяника в Тюмени или отправиться на экскурсию на Саяно-Шушенскую ГЭС в Красноярском крае.</p>
+    <p class="with-offset"><span class="is-bold">Больше природы.</span> Для путешественников, которых манят горы, пещеры, степи и леса. Чтобы сфотографировать полярное сияние, отправляйтесь в Мурманскую область, лотосовые озёра — в Хабаровский край, горбатых китов и морских котиков — на Курильские острова.</p>
+    <p class="with-offset"><span class="is-bold">Больше экстрима.</span> Если хочется провести отпуск в движении, можно отправиться на ночной астротуризм в Карачаево-Черкесии, полетать на параплане в горах Республики Марий Эл и попариться в бане на Алтае.</p>
+    <p class="with-offset"><span class="is-bold">Больше истории.</span> В разных уголках России местные жители знакомят с обычаями, ремёслами и укладом жизни. Если хочется прикоснуться к истории и культуре, отправляйтесь в тур по деревянному зодчеству Карелии, в стойбище оленеводов «Мув Тай» рядом с Салехардом или на чайные плантации Краснодарского края.</p>
+  </div>
+</div>
+
+<div class="wrapper">
+  <h2>Соберите галерею будущего отпуска</h2>
+
+  <div class="constructor">
+    <div class="slider-block">
+      <p class="constructor-intro">В путешествии меня впечатляют...</p>
+
+      <div class="slider-grid">
+        <div class="slider-row">
+          <div class="slider-labels">
+            <span>Природа</span>
+            <span class="slider-value" id="value-nature">0</span>
+          </div>
+          <input type="range" id="slider-nature" min="0" max="100" value="0" step="1">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-labels">
+            <span>Технологии</span>
+            <span class="slider-value" id="value-tech">0</span>
+          </div>
+          <input type="range" id="slider-tech" min="0" max="100" value="0" step="1">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-labels">
+            <span>История</span>
+            <span class="slider-value" id="value-history">0</span>
+          </div>
+          <input type="range" id="slider-history" min="0" max="100" value="0" step="1">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-labels">
+            <span>Экстрим</span>
+            <span class="slider-value" id="value-extreme">0</span>
+          </div>
+          <input type="range" id="slider-extreme" min="0" max="100" value="0" step="1">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery-left">
+      <p class="gallery-title">Галерея будущего отпуска</p>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+    <div class="gallery-right">
+      <p class="gallery-right-title" id="gallery-right-title">Больше впечатлений из города</p>
+      <img class="cover-image" id="cover-image" src="" alt="">
+      <p class="description" id="cover-description"></p>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+  <aside>
+    <h3 id="tour-title">Туры: есть на поезде, самолёте и автобусе</h3>
+    <p><a href="#">По данным Туту</a>, в летний туристический сезон цены на жильё вырастают на 20%. Если планируете поездку, выгодно заранее бронировать места.</p>
+    <a href="#">Горящие туры вместе с проживанием →</a>
+  </aside>
+  <button class="share-selection"><svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.6497 18.1649C10.6497 18.1649 9.63011 17.9828 9.83247 16.7372C9.91809 16.2094 10.1464 14.7922 10.3799 13.3222C4.51405 12.6334 3.02748 19.0939 6.84897 23.5645L6.07066 24C-5.12658 17.1726 0.830063 3.78711 10.5226 5.06708C10.3565 3.71322 10.1957 2.38311 10.1127 1.71014C9.91031 0.0263909 11.0311 0 11.0311 0L22 9.989L10.6497 18.1649Z" fill="black"/>
+</svg>
+Поделиться подборкой</button>
+</div>
+
+<footer class="wrapper">
+  <div class="contacts">
+    <p>Юный техник, 2026</p>
+    <a href="mailto:youth-tech@ya.ru">youth-tech@ya.ru</a>
+    <a href="tel:83431111111">8 343 111‑11‑11</a>
+  </div>
+  <nav class="footer-menu">
+    <a href="#">Статьи</a>
+    <a href="#">Курсы</a>
+    <a href="#">Сообщество</a>
+  </nav>
+</footer>
+
+<script>
+  // Каждые SWAP_STEP пунктов ползунка добавляют одну тематическую подмену карточки
+  const SWAP_STEP = 20;
+
+  // ---------- Данные городов ----------
+  const cities = [
+    {
+      name: "Казань",
+      baseX: 50, baseY: -20,
+      tourTitleTemplate: null, // используется стандартный шаблон заголовка
+      images: [
+        { src: "images/Kazan-0.png", cover: "images/Kazan-0-square.png", title: "Северный вокзал", desc: "Можно сразу выйти в исторический центр Казани, спуститься в метро или перекусить после дороги в «Доброй столовой»: там домашняя еда и низкие цены." },
+        { src: "images/Kazan-1.png", cover: "images/Kazan-1-square.png", title: "Юрта Тамырлар", desc: "В Старо-Татарской слободе в тюркско-татарской юрте проводят экскурсии с чаепитием, дегустацией кумыса и казылыка. Можно посмотреть этношоу и потрогать оружие." },
+        { src: "images/Kazan-2.png", cover: "images/Kazan-2-square.png", title: "Театр кукол «Экият»", desc: "Летом можно сходить на экскурсию и узнать, как театр работает изнутри. Экскурсия — реальный шанс попасть в театр кукол, потому что в учебном году билеты на спектакли раскупают за полгода." },
+        { src: "images/Kazan-3.png", cover: "images/Kazan-3-square.png", title: "Рыбоводный завод «Биосфера-ФИШ»", desc: "На экскурсии показывают, как из мальков выращивают осетров и белуг, и делятся секретами добычи чёрной икры." },
+        { src: "images/Kazan-4.png", cover: "images/Kazan-4-square.png", title: "Кул-Шариф — мечеть к тысячелетию Казани", desc: "Вход — через ворота Кремля. Рядом можно пострелять из арбалета в тире, пройти мастер-класс по ковке стрел и поучаствовать в игровой битве за башню." },
+        { src: "images/Kazan-5.png", cover: "images/Kazan-5-square.png", title: "Национальная библиотека", desc: "Архитектурный комплекс, где рядом с читальными залами есть арт-выставки, театральные площадки и музыкальная зона с коллекцией винила и современными проигрывателями." },
+        { src: "images/Kazan-6.png", cover: "images/Kazan-6-square.png", title: "Фабрика Алафузова", desc: "Бывшая прядильная фабрика, которая теперь играет роль индустриального арт-пространства. Здесь проходят выставки, дискотеки и фаер-шоу." },
+        { src: "images/Kazan-7.png", cover: "images/Kazan-7-square.png", title: "Экстрим-парк «УРАМ»", desc: "Крупнейший в России парк с рампами для самокатов, скейтбордов, ВМХ, роликов и паркура. Есть прокат оборудования и тренировки с инструктором." },
+        { src: "images/Kazan-8.png", cover: "images/Kazan-8-square.png", title: "Музей археологического дерева", desc: "На теплоходе можно попасть на остров Свияжск, где сохранили археологический раскоп. Все исторические срубы и мостовые остались в том виде, как их нашли археологи." }
+      ],
+            swap: {
+        nature: [
+          { slot: 5, image: { src: "images/Kazan-11.png", cover: "images/Kazan-11-square.png", title: "Голубые озёра", desc: "Из-за минералов вода в них окрасилась в бирюзовый цвет. Температура весь год около 6–8 °С, но люди приезжают сюда для закаливания, дайвинга и пикников." } }
+        ],
+        tech: [
+          { slot: 2, image: { src: "images/Kazan-9.png", cover: "images/Kazan-9-square.png", title: "Экскурсия на пивзавод (18+)", desc: "Участники посетят дом пивоваров и завод «АБ ИнБев Эфес», где увидят производство: от выбора сырья до розлива — и продегустируют несколько сортов пива." } }
+        ],
+        history: [
+          { slot: 7, image: { src: "images/Kazan-12.png", cover: "images/Kazan-12-square.png", title: "Дом татарского быта", desc: "Здесь можно руками потрогать экспонаты и сфотографироваться в татарских костюмах. В конце экскурсии угощают татарским чаем и сладостями." } }
+        ],
+        extreme: [
+          { slot: 3, image: { src: "images/Kazan-10.png", cover: "images/Kazan-10-square.png", title: "Ночной трамвай со спектаклем", desc: "Начало — в 23:00. Действие проходит внутри реального трамвая, где зрители погружаются в сюжет через специальные наушники. Декорациями служат виды Казани на пути трамвая." } }
+        ]
+      }
+    },
+    {
+      name: "Карелия",
+      baseX: -70, baseY: -40,
+      tourTitleTemplate: null,
+      images: [
+        { src: "images/Karelia-0.png", cover: "images/Karelia-0-square.png", title: "Рускеальский экспресс", desc: "По маршруту Сортавала — Горный парк Рускеала курсируют два тематических поезда. Их вагоны оформлены в стиле XX века, а в ресторане подают карельские блюда." },
+        { src: "images/Karelia-1.png", cover: "images/Karelia-1-square.png", title: "Мраморный каньон в парке Рускеала", desc: "При Екатерине II здесь вручную добывали мрамор для Петербургских дворцов. Теперь это памятник промышленной истории России." },
+        { src: "images/Karelia-2.png", cover: "images/Karelia-2-square.png", title: "«Обитель Ангелов» в парке Рускеала", desc: "В геокуполе живут люди и ангелы: Ангел-мама, Ангел-хулиган с рогаткой, Ангел-рыбак и другие. Над ними — шестиметровая рука Создателя." },
+        { src: "images/Karelia-3.png", cover: "images/Karelia-3-square.png", title: "«Метеор» в Кижи", desc: "Это быстроходное судно за полтора часа привозит туристов из Петрозаводска в заповедник Кижи. Можно заказать групповую экскурсию на остров." },
+        { src: "images/Karelia-4.png", cover: "images/Karelia-4-square.png", title: "Кижи", desc: "Музей деревянного зодчества под открытым небом. В центре ансамбля — церковь Преображения Господня с 22 куполами, которую построили в 1714 г. без единого гвоздя." },
+        { src: "images/Karelia-5.png", cover: "images/Karelia-5-square.png", title: "Музей Гоголева в Сортавале", desc: "Это собрание деревянных рельефов народного художника России. В них мастер отразил природу Русского Севера, простых людей, их быт и праздники." },
+        { src: "images/Karelia-6.png", cover: "images/Karelia-6-square.png", title: "Мастер-класс по карельской выпечке", desc: "Сотрудники музея «Кижи» учат защипывать тесто для калиток, раскатывать сканцы и закручивать ржаные блины. После готовки — чаепитие со свежей выпечкой." },
+        { src: "images/Karelia-7.png", cover: "images/Karelia-7-square.png", title: "Старинные деревни Карелии", desc: "Поклонники этнографического туризма могут отправиться на экскурсию по деревням Кинерма, Корза, Маньга, Рубчойла и вепсское село Шелтозеро." },
+        { src: "images/Karelia-8.png", cover: "images/Karelia-8-square.png", title: "Вулкан Гирвас", desc: "Это потухший вулкан с историей в 3 млрд лет. Теперь вокруг его лавовых полей растут хвойные леса, а из кратера стекает ручей по каменным ступеням — бывшей раскалённой магме." }
+      ],
+      swap: {
+        nature: [],
+        tech: [
+          { slot: 5, image: { src: "images/Karelia-11.png", cover: "images/Karelia-11-square.png", title: "Мастер-класс «Лохикейто» в Музее изобразительных искусств", desc: "В музее Петрозаводска после экскурсий проводят мастер-классы: по печатной графике, линогравюре и набойке текстильной краской." } }
+        ],
+        history: [
+          { slot: 3, image: { src: "images/Karelia-10.png", cover: "images/Karelia-10-square.png", title: "Онежские петроглифы", desc: "Наскальные рисунки карельских племён, которые жили здесь 5–6 тысяч лет назад. Это произведение первобытного искусства под охраной ЮНЕСКО." } }
+        ],
+        extreme: [
+          { slot: 2, image: { src: "images/Karelia-9.png", cover: "images/Karelia-9-square.png", title: "Дайвинг в парке Рускеала", desc: "В каньоне видимость под водой достигает 18 метров, поэтому можно плавать с аквалангом. Есть курсы разной сложности: от пробного погружения до пещерного дайвинга." } }
+        ]
+      }
+    },
+    {
+      name: "Калининград",
+      baseX: 20, baseY: -40,
+      tourTitleTemplate: "Туры в Калининград: есть на самолёте туда и обратно",
+      images: [
+        { src: "images/Kaliningrad-0.png", cover: "images/Kaliningrad-0-square.png", title: "На самолёте — с паспортом РФ", desc: "Если ехать поездом, нужен ещё и загранпаспорт. Всё из-за того, что Калининградская область граничит не с Россией, а с Литвой и Польшей." },
+        { src: "images/Kaliningrad-1.png", cover: "images/Kaliningrad-1-square.png", title: "Рыбная деревня", desc: "С реки Преголя открывается вид на ансамбль прусских зданий, воссоздающих довоенный Кёнигсберг. Вдоль набережной — кафе и лавки с сувенирами." },
+        { src: "images/Kaliningrad-2.png", cover: "images/Kaliningrad-2-square.png", title: "Музей мирового океана", desc: "Можно заглянуть в пасть кашалота, посетить настоящую подлодку, плавающий маяк и пять судов. Одно из них — «Витязь», на котором измерили глубину 11-километровой Марианской впадины." },
+        { src: "images/Kaliningrad-3.png", cover: "images/Kaliningrad-3-square.png", title: "Форт «Дёнхофф»", desc: "Это один из фортов «Ночной перины Кёнигсберга». В нём проводят экскурсии через казематы, подземные галереи и внутренние дворы и рассказывают, как защищали город полтора века назад." },
+        { src: "images/Kaliningrad-4.png", cover: "images/Kaliningrad-4-square.png", title: "Кафедральный собор на острове Канта", desc: "У его стен покоится Иммануил Кант. В башне открыт музей с прижизненными работами философа, а в главном здании проходят экскурсии, лекции и органные концерты." },
+        { src: "images/Kaliningrad-5.png", cover: "images/Kaliningrad-5-square.png", title: "Органный концерт в Кафедральном соборе", desc: "Трёхэтажный орган занимает всю западную стену собора. С программой выступают три раза в день в Концертном зале с витражами." },
+        { src: "images/Kaliningrad-6.png", cover: "images/Kaliningrad-6-square.png", title: "Зеленоградск — столица кошек", desc: "Их образы повсюду: в скульптурах, мозаиках и граффити. Им посвящён музей «Мурариум». После знакомства с хвостатыми можно пройтись по районам с немецкими виллами 19–20 веков." },
+        { src: "images/Kaliningrad-7.png", cover: "images/Kaliningrad-7-square.png", title: "Канатная дорога в Светлогорске", desc: "Она спускает к пляжному променаду. В самом городе сохранилась архитектура старого Раушена: немецкие виллы, водонапорная башня и курортная застройка 19–20 веков." },
+        { src: "images/Kaliningrad-8.png", cover: "images/Kaliningrad-8-square.png", title: "Танцующий лес", desc: "В Куршской косе есть сосны, которые растут зигзагами, и никто не знает почему. Их высадили в 1961 году для укрепления дюн, но они стали изгибаться. Сегодня по загадочной тропе водят экскурсии." }
+      ],
+      swap: {
+        nature: [
+          { slot: 7, image: { src: "images/Kaliningrad-12.png", cover: "images/Kaliningrad-12-square.png", title: "Пляж на берегу Балтийского моря", desc: "Десять пляжей области отмечены «Синим флагом» — международным знаком чистоты, безопасности и качества отдыха. К Калининграду ближе всего пляж «Гнездо» в Зеленоградске." } }
+        ],
+        tech: [
+          { slot: 3, image: { src: "images/Kaliningrad-10.png", cover: "images/Kaliningrad-10-square.png", title: "Музей янтаря", desc: "В его коллекции 16 тысяч экспонатов: украшения неолита, инклюзии — древние организмы, сохранившиеся в янтаре, и фрагменты реконструкции Янтарной комнаты — утраченного шедевра 18-го века." } }
+        ],
+        history: [
+          { slot: 2, image: { src: "images/Kaliningrad-9.png", cover: "images/Kaliningrad-9-square.png", title: "Экскурсия по реке Преголя", desc: "От Рыбной деревни регулярно отправляются катера с экскурсиями. По ходу движения можно увидеть остров Канта, порт и исторические набережные Калининграда." } }
+        ],
+        extreme: [
+          { slot: 5, image: { src: "images/Kaliningrad-11.png", cover: "images/Kaliningrad-11-square.png", title: "Куршская коса", desc: "Это национальный парк с дюнами у Балтийского моря. В конце туристической тропы открывается вид на самую высокую дюну Европы." } }
+        ]
+      }
+    }
+  ];
+
+  const sliders = {
+    nature:  document.getElementById('slider-nature'),
+    tech:    document.getElementById('slider-tech'),
+    history: document.getElementById('slider-history'),
+    extreme: document.getElementById('slider-extreme')
+  };
+  const valueLabels = {
+    nature:  document.getElementById('value-nature'),
+    tech:    document.getElementById('value-tech'),
+    history: document.getElementById('value-history'),
+    extreme: document.getElementById('value-extreme')
+  };
+
+  const grid = document.getElementById('gallery-grid');
+  const rightTitle = document.getElementById('gallery-right-title');
+  const cover = document.getElementById('cover-image');
+  const coverDesc = document.getElementById('cover-description');
+  const tourTitle = document.getElementById('tour-title');
+
+  let currentCity = null;
+  let activeIndex = 0;
+
+  function findNearestCity(x, y) {
+    let best = cities[0];
+    let bestDist = Infinity;
+    for (const city of cities) {
+      const d = Math.hypot(city.baseX - x, city.baseY - y);
+      if (d < bestDist) { bestDist = d; best = city; }
+    }
+    return best;
+  }
+
+  // Собирает итоговый набор из 9 карточек: база + тематические подмены
+  function getDisplayImages(city, values) {
+    const images = city.images.map(img => ({ ...img }));
+    ['nature', 'tech', 'history', 'extreme'].forEach(theme => {
+      const pool = city.swap[theme] || [];
+      const count = Math.min(Math.floor(values[theme] / SWAP_STEP), pool.length);
+      for (let i = 0; i < count; i++) {
+        const { slot, image } = pool[i];
+        images[slot] = image;
+      }
+    });
+    return images;
+  }
+
+  function renderGrid(images) {
+    grid.innerHTML = '';
+    images.forEach((img, index) => {
+      const el = document.createElement('img');
+      el.src = img.src;
+      el.alt = img.title;
+      el.dataset.index = index;
+      el.addEventListener('mouseenter', () => {
+        activeIndex = index;
+        showDescription(images, index);
+      });
+      grid.appendChild(el);
+    });
+    if (activeIndex >= images.length) activeIndex = 0;
+    showDescription(images, activeIndex);
+  }
+
+  function showDescription(images, index) {
+    const img = images[index];
+    cover.src = img.cover || img.src; // если задан отдельный cover — берём его, иначе fallback на src
+    cover.alt = img.title;
+    coverDesc.innerHTML = `<span class="is-bold">${img.title}.</span> ${img.desc}`;
+    [...grid.children].forEach((el, i) => {
+      el.classList.toggle('is-active', i === index);
+    });
+  }
+
+  function updateTrackFill(input) {
+    const pct = (input.value - input.min) / (input.max - input.min) * 100;
+    input.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${pct}%, var(--line) ${pct}%, var(--line) 100%)`;
+  }
+
+  function update() {
+    const values = {
+      nature:  Number(sliders.nature.value),
+      tech:    Number(sliders.tech.value),
+      history: Number(sliders.history.value),
+      extreme: Number(sliders.extreme.value)
+    };
+
+    Object.keys(sliders).forEach(key => {
+      valueLabels[key].textContent = values[key];
+      updateTrackFill(sliders[key]);
+    });
+
+    const x = values.tech - values.nature;
+    const y = values.extreme - values.history;
+
+    const city = findNearestCity(x, y);
+    if (city !== currentCity) {
+      currentCity = city;
+      activeIndex = 0;
+      rightTitle.textContent = `Больше впечатлений из города ${city.name}`;
+      tourTitle.textContent = city.tourTitleTemplate
+        ? city.tourTitleTemplate
+        : `Туры в ${city.name}: есть на поезде, самолёте и автобусе`;
+    }
+
+    const images = getDisplayImages(city, values);
+    renderGrid(images);
+  }
+
+  Object.values(sliders).forEach(input => {
+    input.addEventListener('input', update);
+  });
+
+  update();
+</script>
+</body>
+</html>
